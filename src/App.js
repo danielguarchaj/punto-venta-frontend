@@ -5,6 +5,7 @@ import Dashboard from "./components/pages/Dashboard";
 import Reports from "./components/pages/Reports";
 import Login from "./components/pages/Login";
 import { APP_URLS } from "./helpers/routes";
+import Billing from "./components/pages/Billing";
 
 const routesConfig = [
   {
@@ -12,11 +13,19 @@ const routesConfig = [
     element: <Login />,
   },
   {
+    path: APP_URLS.admin,
+    element: <div>Pagina de administracion</div>,
+  },
+  {
     element: <Layout />,
     children: [
       {
         path: APP_URLS.dashboard,
         element: <Dashboard />,
+      },
+      {
+        path: APP_URLS.billing,
+        element: <Billing />,
       },
       {
         path: APP_URLS.reports,

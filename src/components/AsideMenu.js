@@ -1,3 +1,9 @@
+import { Link } from "react-router-dom";
+
+import MenuItem from "./MenuItem";
+
+import { APP_URLS } from "../helpers/routes";
+
 import Logo from "../assets/theme/media/logos/logo-letter-13.png";
 
 function AsideMenu() {
@@ -7,9 +13,11 @@ function AsideMenu() {
       id="kt_aside"
     >
       <div className="brand flex-column-auto" id="kt_brand">
-        <a href="index.html" className="brand-logo">
-          <img alt="Logo" className="w-65px" src={Logo} />
-        </a>
+        <Link to={APP_URLS.dashboard}>
+          <div className="brand-logo">
+            <img alt="Logo" className="w-65px" src={Logo} />
+          </div>
+        </Link>
       </div>
       <div
         className="aside-menu-wrapper flex-column-fluid"
@@ -23,40 +31,47 @@ function AsideMenu() {
           data-menu-dropdown-timeout="500"
         >
           <ul className="menu-nav">
-            <li className="menu-item">
-              <a href="index.html" className="menu-link">
-                <i className="menu-icon flaticon-home"></i>
-                <span className="menu-text">Export</span>
-              </a>
-            </li>
-            <li
-              className="menu-item menu-item-submenu"
-              data-menu-toggle="hover"
-            >
-              <a href="/" className="menu-link menu-toggle">
-                <i className="menu-icon flaticon-web"></i>
-                <span className="menu-text">Actions</span>
-                <i className="menu-arrow"></i>
-              </a>
-              <div className="menu-submenu">
-                <i className="menu-arrow"></i>
-                <ul className="menu-subnav">
-                  <li className="menu-item menu-item-parent">
-                    <span className="menu-link">
-                      <span className="menu-text">Actions</span>
-                    </span>
-                  </li>
-                  <li className="menu-item">
-                    <a href="/" className="menu-link">
-                      <i className="menu-bullet menu-bullet-line">
-                        <span></span>
-                      </i>
-                      <span className="menu-text">Reports</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
+            <MenuItem
+              {...{
+                title: "Inicio",
+                icon: "fas fa-home",
+                targetPath: APP_URLS.dashboard,
+              }}
+            />
+            <MenuItem
+              {...{
+                title: "Facturacion",
+                icon: "fas fa-cash-register",
+                targetPath: APP_URLS.billing,
+              }}
+            />
+            <MenuItem
+              {...{
+                title: "Reportes",
+                icon: "fas fa-chart-line",
+                children: [
+                  {
+                    title: "Ventas",
+                    targetPath: APP_URLS.reports,
+                  },
+                  {
+                    title: "Compras",
+                    targetPath: APP_URLS.reports,
+                  },
+                  {
+                    title: "Productos",
+                    targetPath: APP_URLS.reports,
+                  },
+                ],
+              }}
+            />
+            <MenuItem
+              {...{
+                title: "Administración",
+                icon: "flaticon2-settings",
+                targetPath: APP_URLS.admin,
+              }}
+            />
           </ul>
         </div>
       </div>
