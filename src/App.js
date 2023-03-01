@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
 import Dashboard from "./components/pages/Dashboard";
@@ -35,7 +35,7 @@ const routesConfig = [
   },
 ];
 
-const router = createBrowserRouter(routesConfig);
+const router = createHashRouter(routesConfig);
 function App() {
   return <RouterProvider router={router} />;
 }
