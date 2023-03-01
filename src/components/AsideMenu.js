@@ -1,4 +1,4 @@
-import React from "react";
+import Logo from "../assets/theme/media/logos/logo-letter-13.png";
 
 function AsideMenu() {
   return (
@@ -8,11 +8,7 @@ function AsideMenu() {
     >
       <div className="brand flex-column-auto" id="kt_brand">
         <a href="index.html" className="brand-logo">
-          <img
-            alt="Logo"
-            className="w-65px"
-            src="assets/media/logos/logo-letter-13.png"
-          />
+          <img alt="Logo" className="w-65px" src={Logo} />
         </a>
       </div>
       <div
