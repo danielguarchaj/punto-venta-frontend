@@ -9,6 +9,7 @@ function Footer() {
           <a
             href="http://keenthemes.com/metronic"
             target="_blank"
+            rel="noreferrer"
             className="text-dark-75 text-hover-primary"
           >
             UMG
@@ -18,6 +19,7 @@ function Footer() {
           <a
             href="http://keenthemes.com/metronic"
             target="_blank"
+            rel="noreferrer"
             className="nav-link pl-0 pr-5"
           >
             Acerca de

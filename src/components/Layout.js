@@ -6,6 +6,7 @@ import Subheader from "./Subheader";
 import Header from "./Header";
 import UserPanel from "./UserPanel";
 import QuickKart from "./QuickKart";
+import Footer from "./Footer";
 import OffcanvasOverlay from "./OffcanvasOverlay";
 
 function Layout({ children }) {
@@ -31,10 +32,12 @@ function Layout({ children }) {
             >
               <Subheader />
               <div className="d-flex flex-column-fluid">
-                <div className="container"><Outlet /></div>
+                <div className="container">
+                  <Outlet />
+                </div>
               </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </div>
       </div>
