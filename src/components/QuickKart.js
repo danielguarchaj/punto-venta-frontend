@@ -1,4 +1,9 @@
 import React from "react";
+import img1 from "../assets/theme/media/stock-600x400/img-1.jpg"
+import img2 from "../assets/theme/media/stock-600x400/img-2.jpg"
+import img3 from "../assets/theme/media/stock-600x400/img-3.jpg"
+import img4 from "../assets/theme/media/stock-600x400/img-4.jpg"
+import img8 from "../assets/theme/media/stock-600x400/img-8.jpg"
 
 function QuickKart({ isActive, handleClose }) {
   return (
@@ -9,7 +14,7 @@ function QuickKart({ isActive, handleClose }) {
       }`}
     >
       <div className="offcanvas-header d-flex align-items-center justify-content-between pb-7">
-        <h4 className="font-weight-bold m-0">Shopping Cart</h4>
+        <h4 className="font-weight-bold m-0">Venta actual</h4>
         <button
           className="btn btn-xs btn-icon btn-light btn-hover-primary"
           id="kt_quick_cart_close"
@@ -51,7 +56,7 @@ function QuickKart({ isActive, handleClose }) {
               </div>
             </div>
             <a href="/" className="symbol symbol-70 flex-shrink-0">
-              <img src="assets/media/stock-600x400/img-1.jpg" title="" alt="" />
+              <img src={img1} title="" alt="" />
             </a>
           </div>
           <div className="separator separator-solid"></div>
@@ -84,7 +89,7 @@ function QuickKart({ isActive, handleClose }) {
               </div>
             </div>
             <a href="/" className="symbol symbol-70 flex-shrink-0">
-              <img src="assets/media/stock-600x400/img-2.jpg" title="" alt="" />
+              <img src={img2} title="" alt="" />
             </a>
           </div>
           <div className="separator separator-solid"></div>
@@ -119,7 +124,7 @@ function QuickKart({ isActive, handleClose }) {
               </div>
             </div>
             <a href="/" className="symbol symbol-70 flex-shrink-0">
-              <img src="assets/media/stock-600x400/img-3.jpg" title="" alt="" />
+              <img src={img3} title="" alt="" />
             </a>
           </div>
           <div className="separator separator-solid"></div>
@@ -152,7 +157,7 @@ function QuickKart({ isActive, handleClose }) {
               </div>
             </div>
             <a href="/" className="symbol symbol-70 flex-shrink-0">
-              <img src="assets/media/stock-600x400/img-4.jpg" title="" alt="" />
+              <img src={img4} title="" alt="" />
             </a>
           </div>
           <div className="separator separator-solid"></div>
@@ -185,7 +190,7 @@ function QuickKart({ isActive, handleClose }) {
               </div>
             </div>
             <a href="/" className="symbol symbol-70 flex-shrink-0">
-              <img src="assets/media/stock-600x400/img-8.jpg" title="" alt="" />
+              <img src={img8} title="" alt="" />
             </a>
           </div>
         </div>
@@ -208,7 +213,7 @@ function QuickKart({ isActive, handleClose }) {
           </div>
           <div className="text-right">
             <button type="button" className="btn btn-primary text-weight-bold">
-              Place Order
+              Facturar
             </button>
           </div>
         </div>

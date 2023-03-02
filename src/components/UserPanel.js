@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { APP_URLS } from "../helpers/routes";
+import userProfile from "../assets/theme/media/users/300_21.jpg";
 
 function UserPanel({ isActive, handleClose }) {
   return (
@@ -11,8 +12,8 @@ function UserPanel({ isActive, handleClose }) {
     >
       <div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
         <h3 className="font-weight-bold m-0">
-          User Profile
-          <small className="text-muted font-size-sm ml-2">12 messages</small>
+          Perfil del usuario
+          <small className="text-muted font-size-sm ml-2">12 mensajes</small>
         </h3>
         <button
           className="btn btn-xs btn-icon btn-light btn-hover-primary"
@@ -27,7 +28,7 @@ function UserPanel({ isActive, handleClose }) {
           <div className="symbol symbol-100 mr-5">
             <div
               className="symbol-label"
-              // style="background-image:url('assets/media/users/300_21.jpg')"
+              style={{ backgroundImage: `url(${userProfile})` }}
             ></div>
             <i className="symbol-badge bg-success"></i>
           </div>
@@ -38,7 +39,7 @@ function UserPanel({ isActive, handleClose }) {
             >
               James Jones
             </a>
-            <div className="text-muted mt-1">Application Developer</div>
+            <div className="text-muted mt-1">Vendedor</div>
             <div className="navi mt-2">
               <a href="/" className="navi-item">
                 <span className="navi-link p-0 pb-2">
@@ -75,7 +76,7 @@ function UserPanel({ isActive, handleClose }) {
               </a>
               <Link to={APP_URLS.login}>
                 <button className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">
-                  Sign Out
+                  Cerrar Sesión
                 </button>
               </Link>
             </div>
