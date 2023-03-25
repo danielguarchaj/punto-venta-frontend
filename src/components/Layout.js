@@ -1,5 +1,6 @@
-import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import HeaderMobile from "./HeaderMobile";
 import AsideMenu from "./AsideMenu";
 import Subheader from "./Subheader";
@@ -8,8 +9,20 @@ import UserPanel from "./UserPanel";
 import QuickKart from "./QuickKart";
 import Footer from "./Footer";
 import OffcanvasOverlay from "./OffcanvasOverlay";
+import { APP_URLS } from "../helpers/routes";
 
-function Layout({ children }) {
+function Layout() {
+  const {
+    auth: { token, loginStatus },
+  } = useSelector((state) => state);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token && loginStatus !== "succeeded") {
+      return navigate(APP_URLS.login);
+    }
+  }, [token, loginStatus, navigate]);
+
   const [showUserPanel, setShowUserPanel] = useState(false);
   const [showQuickKart, setShowQuickKart] = useState(false);
   return (

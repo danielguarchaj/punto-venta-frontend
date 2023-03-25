@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import { APP_URLS } from "../helpers/routes";
+import { useDispatch } from "react-redux";
+import { logout } from "../reducers/auth";
 import userProfile from "../assets/theme/media/users/300_21.jpg";
 
 function UserPanel({ isActive, handleClose }) {
+  const dispatch = useDispatch();
   return (
     <div
       id="kt_quick_user"
@@ -74,11 +75,12 @@ function UserPanel({ isActive, handleClose }) {
                   </span>
                 </span>
               </a>
-              <Link to={APP_URLS.login}>
-                <button className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">
-                  Cerrar Sesión
-                </button>
-              </Link>
+              <button
+                onClick={() => dispatch(logout())}
+                className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
+              >
+                Cerrar Sesión
+              </button>
             </div>
           </div>
         </div>
