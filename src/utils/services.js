@@ -1,6 +1,7 @@
 export const SERVICES = {
+  // baseUrl: "http://localhost:8000/",
+  baseUrl: "https://danielguarchaj.pythonanywhere.com/",
   auth: {
-    baseUrl: "http://localhost:8000/auth/",
-    getToken: "token/",
+    getToken: "auth/token/",
   },
 };

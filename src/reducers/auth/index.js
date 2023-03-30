@@ -52,8 +52,8 @@ export const { setToken, updateUsername, updatePassword, logout } =
 export default authSlice.reducer;
 
 export const getToken = createAsyncThunk("auth/getToken", async (payload) => {
-  const { auth } = SERVICES;
-  const response = await fetch(`${auth.baseUrl}${auth.getToken}`, {
+  const { auth, baseUrl } = SERVICES;
+  const response = await fetch(`${baseUrl}${auth.getToken}`, {
     method: "POST",
     body: JSON.stringify(payload),
     headers: { "Content-type": "application/json; charset=UTF-8" },
