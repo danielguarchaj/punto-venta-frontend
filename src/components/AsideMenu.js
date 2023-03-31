@@ -47,6 +47,13 @@ function AsideMenu() {
             />
             <MenuItem
               {...{
+                title: "Compras",
+                icon: "fas fa-truck-loading",
+                targetPath: APP_URLS.billing,
+              }}
+            />
+            <MenuItem
+              {...{
                 title: "Reportes",
                 icon: "fas fa-chart-line",
                 children: [
@@ -65,13 +72,12 @@ function AsideMenu() {
                 ],
               }}
             />
-            <MenuItem
-              {...{
-                title: "Administración",
-                icon: "flaticon2-settings",
-                targetPath: APP_URLS.admin,
-              }}
-            />
+            <li className="menu-item">
+              <a target={"_blank"} rel="noreferrer" className="menu-link" href={APP_URLS.admin}>
+                <i className="menu-icon flaticon2-settings"></i>
+                <span className="menu-text">Administración</span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>

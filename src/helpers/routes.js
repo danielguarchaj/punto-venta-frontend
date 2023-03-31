@@ -3,7 +3,7 @@ export const APP_URLS = {
   reports: "reports",
   login: "login",
   billing: "billing",
-  admin: "admin",
+  admin: "https://danielguarchaj.pythonanywhere.com/admin/",
 };
 
 export const APP_PATH_NAMES = {
