@@ -59,15 +59,15 @@ function AsideMenu() {
                 children: [
                   {
                     title: "Ventas",
-                    targetPath: APP_URLS.reports,
+                    targetPath: APP_URLS.reports.base,
                   },
                   {
                     title: "Compras",
-                    targetPath: APP_URLS.reports,
+                    targetPath: APP_URLS.reports.purchases,
                   },
                   {
                     title: "Productos",
-                    targetPath: APP_URLS.reports,
+                    targetPath: APP_URLS.reports.base,
                   },
                 ],
               }}

@@ -1,9 +1,7 @@
+import { Outlet } from "react-router-dom";
+
 function Reports() {
-  return (
-    <div>
-      Report page
-    </div>
-  )
+  return <div><Outlet /></div>;
 }
 
-export default Reports
+export default Reports;

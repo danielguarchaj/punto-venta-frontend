@@ -9,9 +9,9 @@ import loginImage from "../../assets/theme/media/svg/illustrations/login-visual-
 import "../../assets/theme/css/pages/login/login-1.css";
 
 function Login() {
-  const {
-    auth: { username, password, token, loginStatus },
-  } = useSelector((state) => state);
+  const { username, password, token, loginStatus } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

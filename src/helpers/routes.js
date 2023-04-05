@@ -1,6 +1,8 @@
 export const APP_URLS = {
   dashboard: "/",
-  reports: "reports",
+  reports: {
+    purchases: "reports-purchases",
+  },
   login: "login",
   billing: "billing",
   admin: "https://danielguarchaj.pythonanywhere.com/admin/",
@@ -11,4 +13,5 @@ export const APP_PATH_NAMES = {
   "/reports": "Reportes",
   "/login": "Login",
   "/billing": "Facturación",
+  "/reports-purchases": "Reporte de compras"
 };

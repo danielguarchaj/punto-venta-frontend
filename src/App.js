@@ -2,10 +2,10 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
 import Dashboard from "./components/pages/Dashboard";
-import Reports from "./components/pages/Reports";
 import Login from "./components/pages/Login";
 import { APP_URLS } from "./helpers/routes";
 import Billing from "./components/pages/Billing";
+import PurchasesReport from "./components/pages/PurchasesReport";
 
 const routesConfig = [
   {
@@ -28,8 +28,8 @@ const routesConfig = [
         element: <Billing />,
       },
       {
-        path: APP_URLS.reports,
-        element: <Reports />,
+        path: APP_URLS.reports.purchases,
+        element: <PurchasesReport />,
       },
     ],
   },
