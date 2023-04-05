@@ -1,11 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SERVICES } from "../../utils/services";
+import { parseJWT } from "../../utils/helpers";
 
 const initialState = {
   token: "",
   loginStatus: "loading" | "failed" | "succeeded",
   username: "",
   password: "",
+  tokenPayload: {
+    user: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      groups: [{ name: "" }],
+    },
+  },
 };
 
 export const authSlice = createSlice({
@@ -33,6 +42,7 @@ export const authSlice = createSlice({
         if (status === 200) {
           state.loginStatus = "succeeded";
           state.token = token;
+          state.tokenPayload = parseJWT(token);
           return;
         }
         state.loginStatus = "failed";

@@ -1,9 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/auth";
-import userProfile from "../assets/theme/media/users/300_21.jpg";
 
 function UserPanel({ isActive, handleClose }) {
   const dispatch = useDispatch();
+
+  const {
+    tokenPayload: { user },
+  } = useSelector((state) => state.auth);
+
   return (
     <div
       id="kt_quick_user"
@@ -12,10 +16,7 @@ function UserPanel({ isActive, handleClose }) {
       }`}
     >
       <div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
-        <h3 className="font-weight-bold m-0">
-          Perfil del usuario
-          <small className="text-muted font-size-sm ml-2">12 mensajes</small>
-        </h3>
+        <h3 className="font-weight-bold m-0">Mi perfil</h3>
         <button
           className="btn btn-xs btn-icon btn-light btn-hover-primary"
           id="kt_quick_user_close"
@@ -26,23 +27,15 @@ function UserPanel({ isActive, handleClose }) {
       </div>
       <div className="offcanvas-content pr-5 mr-n5">
         <div className="d-flex align-items-center mt-5">
-          <div className="symbol symbol-100 mr-5">
-            <div
-              className="symbol-label"
-              style={{ backgroundImage: `url(${userProfile})` }}
-            ></div>
-            <i className="symbol-badge bg-success"></i>
-          </div>
           <div className="d-flex flex-column">
-            <a
-              href="/"
-              className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
-            >
-              James Jones
-            </a>
-            <div className="text-muted mt-1">Vendedor</div>
+            <div className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">
+              {user.first_name} {user.last_name}
+            </div>
+            <div className="text-muted mt-1">
+              {(user.groups.length && user.groups[0].name) || ""}
+            </div>
             <div className="navi mt-2">
-              <a href="/" className="navi-item">
+              <div className="navi-item">
                 <span className="navi-link p-0 pb-2">
                   <span className="navi-icon mr-1">
                     <span className="svg-icon svg-icon-lg svg-icon-primary">
@@ -71,10 +64,10 @@ function UserPanel({ isActive, handleClose }) {
                     </span>
                   </span>
                   <span className="navi-text text-muted text-hover-primary">
-                    jm@softplus.com
+                    {user.email}
                   </span>
                 </span>
-              </a>
+              </div>
               <button
                 onClick={() => dispatch(logout())}
                 className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"

@@ -1,6 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 function Header({ handleOpenUserPanel, handleOpenQuickKart }) {
+  const {
+    tokenPayload: { user },
+  } = useSelector((state) => state.auth);
+
   return (
     <div id="kt_header" className="header header-fixed">
       <div className="container-fluid d-flex align-items-stretch justify-content-between">
@@ -50,14 +55,14 @@ function Header({ handleOpenUserPanel, handleOpenQuickKart }) {
               id="kt_quick_user_toggle"
             >
               <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
-                Hi,
+                Hola,
               </span>
               <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                Sean
+                {user.first_name}
               </span>
               <span className="symbol symbol-35 symbol-light-success">
                 <span className="symbol-label font-size-h5 font-weight-bold">
-                  S
+                  {user.first_name[0]}
                 </span>
               </span>
             </div>
