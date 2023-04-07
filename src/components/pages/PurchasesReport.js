@@ -104,25 +104,33 @@ function PurchasesReport() {
               <label>Fecha compra desde esta fecha:</label>
               <input
                 type="text"
-                className={`form-control ${momentDateFromValid ? 'is-valid': 'is-invalid'}`}
+                className={`form-control ${
+                  momentDateFromValid ? "is-valid" : "is-invalid"
+                }`}
                 placeholder="Fecha inicio"
                 name="purchaseDateFrom"
                 onChange={(e) => handleUpdateInput(e)}
                 value={purchaseDateFrom}
               />
-              <div className="invalid-feedback">La fecha debe estar en formato DD/MM/AAAA.</div>
+              <div className="invalid-feedback">
+                La fecha debe estar en formato DD/MM/AAAA.
+              </div>
             </div>
             <div className="col-lg-4">
               <label>Fecha compra hasta esta fecha:</label>
               <input
                 type="text"
-                className={`form-control ${momentDateToValid ? 'is-valid': 'is-invalid'}`}
+                className={`form-control ${
+                  momentDateToValid ? "is-valid" : "is-invalid"
+                }`}
                 placeholder="Fecha fin"
                 name="purchaseDateTo"
                 onChange={(e) => handleUpdateInput(e)}
                 value={purchaseDateTo}
               />
-              <div className="invalid-feedback">La fecha debe estar en formato DD/MM/AAAA.</div>
+              <div className="invalid-feedback">
+                La fecha debe estar en formato DD/MM/AAAA.
+              </div>
             </div>
             <div className="col-lg-4">
               <label>Encargado:</label>

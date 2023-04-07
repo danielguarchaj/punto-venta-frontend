@@ -6,6 +6,7 @@ import Login from "./components/pages/Login";
 import { APP_URLS } from "./helpers/routes";
 import Billing from "./components/pages/Billing";
 import PurchasesReport from "./components/pages/PurchasesReport";
+import Purchase from "./components/pages/Purchase";
 
 const routesConfig = [
   {
@@ -30,6 +31,10 @@ const routesConfig = [
       {
         path: APP_URLS.reports.purchases,
         element: <PurchasesReport />,
+      },
+      {
+        path: APP_URLS.purchase,
+        element: <Purchase />,
       },
     ],
   },

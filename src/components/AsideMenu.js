@@ -49,7 +49,7 @@ function AsideMenu() {
               {...{
                 title: "Compras",
                 icon: "fas fa-truck-loading",
-                targetPath: APP_URLS.billing,
+                targetPath: APP_URLS.purchase,
               }}
             />
             <MenuItem
