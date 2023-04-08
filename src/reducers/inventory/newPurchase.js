@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SERVICES } from "../../utils/services";
 import { formatDateForBackend } from "../../helpers/converters";
+import {
+  toastSavingNewPurchase,
+  toastSavedNewPurchase,
+  toastErrorNewPurchase,
+  toastInstance,
+} from "../../helpers/toasts";
 
 const initialState = {
   purchaseForm: {
@@ -8,10 +14,11 @@ const initialState = {
     quantity: "",
     price: "",
     expirationDate: "",
-    productLabel: "",
+    productLabel: "Selecciona un producto",
   },
   purchaseList: [],
   total: 0,
+  saveNewPurchaseStatus: "loading" | "failed" | "succeeded",
 };
 
 export const newPurchase = createSlice({
@@ -42,27 +49,31 @@ export const newPurchase = createSlice({
       state.total = initialState.total;
     },
   },
-  // extraReducers(builder) {
-  //   builder
-  //     .addCase(getProducts.pending, (state) => {
-  //       state.productsRequestStatus = "loading";
-  //       state.token = "";
-  //     })
-  //     .addCase(
-  //       getProducts.fulfilled,
-  //       (state, { payload: { status, products } }) => {
-  //         if (status === 200) {
-  //           state.productsRequestStatus = "succeeded";
-  //           state.products = products;
-  //           return;
-  //         }
-  //         state.productsRequestStatus = "failed";
-  //       }
-  //     )
-  //     .addCase(getProducts.rejected, (state) => {
-  //       state.productsRequestStatus = "failed";
-  //     });
-  // },
+  extraReducers(builder) {
+    builder
+      .addCase(saveNewPurchase.pending, (state) => {
+        state.saveNewPurchaseStatus = "loading";
+        toastSavingNewPurchase();
+      })
+      .addCase(saveNewPurchase.fulfilled, (state, { payload: { status } }) => {
+        toastInstance.dismiss(toastSavingNewPurchase);
+        if (status === 200) {
+          state.saveNewPurchaseStatus = "succeeded";
+          state.purchaseForm = initialState.purchaseForm;
+          state.purchaseList = initialState.purchaseList;
+          state.total = initialState.total;
+          toastSavedNewPurchase();
+          return;
+        }
+        state.saveNewPurchaseStatus = "failed";
+        toastErrorNewPurchase();
+      })
+      .addCase(saveNewPurchase.rejected, (state) => {
+        toastInstance.dismiss(toastSavingNewPurchase);
+        state.saveNewPurchaseStatus = "failed";
+        toastErrorNewPurchase();
+      });
+  },
 });
 
 export const {
@@ -73,12 +84,19 @@ export const {
 } = newPurchase.actions;
 export default newPurchase.reducer;
 
-// export const getProducts = createAsyncThunk(
-//   "inventory/getProducts",
-//   async () => {
-//     const { inventory, baseUrl } = SERVICES;
-//     const response = await fetch(`${baseUrl}${inventory.getProducts}`);
-//     const data = await response.json();
-//     return { products: data, status: response.status };
-//   }
-// );
+export const saveNewPurchase = createAsyncThunk(
+  "inventory/saveNewPurchase",
+  async ({ purchaseList, token }) => {
+    console.log(token);
+    const { inventory, baseUrl } = SERVICES;
+    const response = await fetch(`${baseUrl}${inventory.saveNewPurchase}`, {
+      method: "POST",
+      body: JSON.stringify(purchaseList),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { status: response.status };
+  }
+);

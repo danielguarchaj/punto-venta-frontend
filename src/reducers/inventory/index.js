@@ -38,9 +38,13 @@ export default inventory.reducer;
 
 export const getProducts = createAsyncThunk(
   "inventory/getProducts",
-  async () => {
+  async ({ token }) => {
     const { inventory, baseUrl } = SERVICES;
-    const response = await fetch(`${baseUrl}${inventory.getProducts}`);
+    const response = await fetch(`${baseUrl}${inventory.getProducts}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const data = await response.json();
     return { products: data, status: response.status };
   }

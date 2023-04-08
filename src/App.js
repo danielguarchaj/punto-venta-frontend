@@ -7,6 +7,7 @@ import { APP_URLS } from "./helpers/routes";
 import Billing from "./components/pages/Billing";
 import PurchasesReport from "./components/pages/PurchasesReport";
 import Purchase from "./components/pages/Purchase";
+import { Toaster } from "react-hot-toast";
 
 const routesConfig = [
   {
@@ -42,7 +43,12 @@ const routesConfig = [
 
 const router = createHashRouter(routesConfig);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster />
+    </>
+  );
 }
 
 export default App;

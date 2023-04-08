@@ -6,6 +6,7 @@ export const SERVICES = {
   },
   inventory: {
     getPurchases: "inventory/purchases/",
-    getProducts: "inventory/products/"
-  }
+    getProducts: "inventory/products/",
+    saveNewPurchase: "inventory/new-purchase/",
+  },
 };

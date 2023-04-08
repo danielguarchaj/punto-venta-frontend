@@ -11,6 +11,7 @@ import {
 } from "../../reducers/reports/purchases";
 
 function PurchasesReport() {
+  const { token } = useSelector((state) => state.auth);
   const {
     filterFields: { username, purchaseDateFrom, purchaseDateTo },
     purchases,
@@ -34,7 +35,7 @@ function PurchasesReport() {
         filterValue: purchaseDateTo,
       },
     ];
-    dispatch(getPurchases(filters));
+    dispatch(getPurchases({ filters, token }));
   };
 
   const handleUpdateInput = ({ target: { value, name } }) => {

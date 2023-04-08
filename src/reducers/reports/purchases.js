@@ -47,10 +47,15 @@ export default purchasesReportSlice.reducer;
 
 export const getPurchases = createAsyncThunk(
   "purchasesReport/getPurchases",
-  async (filters) => {
+  async ({ filters, token }) => {
     const { inventory, baseUrl } = SERVICES;
     const response = await fetch(
-      `${baseUrl}${inventory.getPurchases}?${buildFilterParams(filters)}`
+      `${baseUrl}${inventory.getPurchases}?${buildFilterParams(filters)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     const data = await response.json();
     return { purchases: data, status: response.status };
