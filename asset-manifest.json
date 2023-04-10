@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/punto-venta-frontend/static/css/main.c134090f.css",
-    "main.js": "/punto-venta-frontend/static/js/main.5c093cbe.js",
+    "main.css": "/punto-venta-frontend/static/css/main.eb83a1e3.css",
+    "main.js": "/punto-venta-frontend/static/js/main.4c55ded3.js",
     "static/js/787.24a0f2a0.chunk.js": "/punto-venta-frontend/static/js/787.24a0f2a0.chunk.js",
     "static/media/la-brands-400.svg": "/punto-venta-frontend/static/media/la-brands-400.928495fae14841a0d610.svg",
     "static/media/la-solid-900.svg": "/punto-venta-frontend/static/media/la-solid-900.a813034654b4ff0a0bac.svg",
     "static/media/fa-solid-900.svg": "/punto-venta-frontend/static/media/fa-solid-900.3e2bc2ffd29f01066d23.svg",
     "static/media/fa-brands-400.svg": "/punto-venta-frontend/static/media/fa-brands-400.63b566233f163d538cce.svg",
     "static/media/Flaticon.svg": "/punto-venta-frontend/static/media/Flaticon.9b97d4a03f52096e0278.svg",
+    "static/media/abstract-9.svg": "/punto-venta-frontend/static/media/abstract-9.091423916acdbf1644039d66dec87d51.svg",
+    "static/media/abstract-7.svg": "/punto-venta-frontend/static/media/abstract-7.f0e0182df20d905f93b3236b422f5a1d.svg",
     "static/media/Flaticon2.svg": "/punto-venta-frontend/static/media/Flaticon2.79370877b4f6af461592.svg",
     "static/media/la-solid-900.eot": "/punto-venta-frontend/static/media/la-solid-900.4184d740eae2fb727bfe.eot",
     "static/media/la-solid-900.ttf": "/punto-venta-frontend/static/media/la-solid-900.279f38601f1d1655255f.ttf",
@@ -25,7 +27,6 @@
     "static/media/la-brands-400.woff": "/punto-venta-frontend/static/media/la-brands-400.925b340f49e65e8bab10.woff",
     "static/media/la-solid-900.woff2": "/punto-venta-frontend/static/media/la-solid-900.3efd5ba15a279377d224.woff2",
     "static/media/fa-brands-400.woff": "/punto-venta-frontend/static/media/fa-brands-400.28d8b8fcc41c3b7134ff.woff",
-    "static/media/300_21.jpg": "/punto-venta-frontend/static/media/300_21.c997041f2fc11a48769f.jpg",
     "static/media/la-brands-400.woff2": "/punto-venta-frontend/static/media/la-brands-400.3a8109c4ac75662f8355.woff2",
     "static/media/fa-solid-900.woff2": "/punto-venta-frontend/static/media/fa-solid-900.4055b0575d40bfb3c7e8.woff2",
     "static/media/fa-brands-400.woff2": "/punto-venta-frontend/static/media/fa-brands-400.37913cdf7cb0571dfac0.woff2",
@@ -61,12 +62,12 @@
     "static/media/summernote.woff2": "/punto-venta-frontend/static/media/summernote.7c9436ed8d2deac04e37.woff2",
     "static/media/Ki.woff": "/punto-venta-frontend/static/media/Ki.f6fde817cad4de6994a2.woff",
     "index.html": "/punto-venta-frontend/index.html",
-    "main.c134090f.css.map": "/punto-venta-frontend/static/css/main.c134090f.css.map",
-    "main.5c093cbe.js.map": "/punto-venta-frontend/static/js/main.5c093cbe.js.map",
+    "main.eb83a1e3.css.map": "/punto-venta-frontend/static/css/main.eb83a1e3.css.map",
+    "main.4c55ded3.js.map": "/punto-venta-frontend/static/js/main.4c55ded3.js.map",
     "787.24a0f2a0.chunk.js.map": "/punto-venta-frontend/static/js/787.24a0f2a0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c134090f.css",
-    "static/js/main.5c093cbe.js"
+    "static/css/main.eb83a1e3.css",
+    "static/js/main.4c55ded3.js"
   ]
 }
