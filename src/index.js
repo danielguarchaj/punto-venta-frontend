@@ -11,6 +11,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./assets/theme/plugins/global/plugins.bundle.css";
 import "./assets/theme/css/style.bundle.css";
+import "./assets/theme/css/style.custom.css";
 
 let persistor = persistStore(store);
 

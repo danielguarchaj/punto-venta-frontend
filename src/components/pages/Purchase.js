@@ -310,7 +310,9 @@ function Purchase() {
                     onClick={handleSaveNewPurchase}
                     disabled={disableSaveNewPurchase}
                   >
-                    {savingNewPurchase && <i class="flaticon2-hourglass-1"></i>}
+                    {savingNewPurchase && (
+                      <i className="flaticon2-hourglass-1"></i>
+                    )}
                     {savingNewPurchase && "Guardando..."}
                     {!savingNewPurchase && "Guardar compra"}
                   </button>

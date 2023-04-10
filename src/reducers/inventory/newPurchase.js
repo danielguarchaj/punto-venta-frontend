@@ -56,7 +56,7 @@ export const newPurchase = createSlice({
         toastSavingNewPurchase();
       })
       .addCase(saveNewPurchase.fulfilled, (state, { payload: { status } }) => {
-        toastInstance.dismiss(toastSavingNewPurchase);
+        toastInstance.dismiss();
         if (status === 200) {
           state.saveNewPurchaseStatus = "succeeded";
           state.purchaseForm = initialState.purchaseForm;
@@ -69,7 +69,6 @@ export const newPurchase = createSlice({
         toastErrorNewPurchase();
       })
       .addCase(saveNewPurchase.rejected, (state) => {
-        toastInstance.dismiss(toastSavingNewPurchase);
         state.saveNewPurchaseStatus = "failed";
         toastErrorNewPurchase();
       });
@@ -87,7 +86,6 @@ export default newPurchase.reducer;
 export const saveNewPurchase = createAsyncThunk(
   "inventory/saveNewPurchase",
   async ({ purchaseList, token }) => {
-    console.log(token);
     const { inventory, baseUrl } = SERVICES;
     const response = await fetch(`${baseUrl}${inventory.saveNewPurchase}`, {
       method: "POST",

@@ -9,9 +9,8 @@ import loginImage from "../../assets/theme/media/svg/illustrations/login-visual-
 import "../../assets/theme/css/pages/login/login-1.css";
 
 function Login() {
-  const { username, password, token, loginStatus } = useSelector(
-    (state) => state.auth
-  );
+  const { username, password, token, loginStatus, sessionExpired } =
+    useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,10 +18,10 @@ function Login() {
   const usernameInputRef = useRef(null);
 
   useEffect(() => {
-    if (token && loginStatus === "succeeded") {
+    if (token && loginStatus === "succeeded" && !sessionExpired) {
       return navigate(APP_URLS.dashboard);
     }
-  }, [token, loginStatus, navigate]);
+  }, [token, loginStatus, sessionExpired, navigate]);
 
   return (
     <div className="d-flex flex-column flex-root">

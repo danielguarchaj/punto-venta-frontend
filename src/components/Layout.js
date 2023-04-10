@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { verifyToken } from "../reducers/auth";
 import HeaderMobile from "./HeaderMobile";
 import AsideMenu from "./AsideMenu";
 import Subheader from "./Subheader";
@@ -10,21 +11,29 @@ import QuickKart from "./QuickKart";
 import Footer from "./Footer";
 import OffcanvasOverlay from "./OffcanvasOverlay";
 import { APP_URLS } from "../helpers/routes";
+import Spinner from "./Spinner";
 
 function Layout() {
-  const {
-    auth: { token, loginStatus },
-  } = useSelector((state) => state);
+  const { token, verifyingToken, sessionExpired } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!token && loginStatus !== "succeeded") {
+    dispatch(verifyToken({ token }));
+    if (sessionExpired) {
       return navigate(APP_URLS.login);
     }
-  }, [token, loginStatus, navigate]);
+  }, [navigate, sessionExpired, dispatch, token]);
 
   const [showUserPanel, setShowUserPanel] = useState(false);
   const [showQuickKart, setShowQuickKart] = useState(false);
+
+  if (verifyingToken) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <HeaderMobile />

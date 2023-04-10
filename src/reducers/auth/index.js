@@ -4,6 +4,8 @@ import { parseJWT } from "../../utils/helpers";
 
 const initialState = {
   token: "",
+  verifyingToken: false,
+  sessionExpired: false,
   loginStatus: "loading" | "failed" | "succeeded",
   username: "",
   password: "",
@@ -43,6 +45,7 @@ export const authSlice = createSlice({
           state.loginStatus = "succeeded";
           state.token = token;
           state.tokenPayload = parseJWT(token);
+          state.sessionExpired = false;
           return;
         }
         state.loginStatus = "failed";
@@ -50,6 +53,25 @@ export const authSlice = createSlice({
       })
       .addCase(getToken.rejected, (state) => {
         state.loginStatus = "failed";
+      })
+      .addCase(verifyToken.pending, (state) => {
+        state.verifyingToken = true;
+      })
+      .addCase(verifyToken.fulfilled, (state, { payload: { status } }) => {
+        state.verifyingToken = false;
+        if (status === 200) {
+          state.sessionExpired = false;
+          return;
+        }
+        state.token = "";
+        state.loginStatus = "failed";
+        state.sessionExpired = true;
+      })
+      .addCase(verifyToken.rejected, (state) => {
+        state.token = "";
+        state.loginStatus = "failed";
+        state.sessionExpired = true;
+        state.verifyingToken = false;
       });
   },
 });
@@ -67,3 +89,16 @@ export const getToken = createAsyncThunk("auth/getToken", async (payload) => {
   const { access: token } = await response.json();
   return { token, status: response.status };
 });
+
+export const verifyToken = createAsyncThunk(
+  "auth/verifyToken",
+  async ({ token }) => {
+    const { auth, baseUrl } = SERVICES;
+    const { status } = await fetch(`${baseUrl}${auth.verifyToken}`, {
+      method: "POST",
+      body: JSON.stringify({ token }),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    });
+    return { status };
+  }
+);
