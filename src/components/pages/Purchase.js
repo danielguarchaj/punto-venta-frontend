@@ -322,7 +322,6 @@ function Purchase() {
                     <button
                       type="button"
                       className="btn btn-light-danger font-weight-bolder mr-3 my-1 px-7"
-                      onClick={handleResetPurchaseList}
                     >
                       Eliminar compra
                     </button>
