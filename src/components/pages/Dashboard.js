@@ -1,9 +1,5 @@
 function Dashboard() {
-    return ( 
-    	<div >
-        Dashboard page1 
-        </div>
-    )
+  return <div>Dashboard page </div>;
 }
 
-export default Dashboard
+export default Dashboard;
