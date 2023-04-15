@@ -40,14 +40,14 @@ function AsideMenu() {
             />
             <MenuItem
               {...{
-                title: "Facturacion",
+                title: "Facturar",
                 icon: "fas fa-cash-register",
                 targetPath: APP_URLS.billing,
               }}
             />
             <MenuItem
               {...{
-                title: "Compras",
+                title: "Nueva Compra",
                 icon: "fas fa-truck-loading",
                 targetPath: APP_URLS.purchase,
               }}

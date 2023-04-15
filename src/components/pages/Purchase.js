@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Select from "react-select";
 import moment from "moment";
 
@@ -11,6 +12,9 @@ import {
   resetPurchase,
   saveNewPurchase,
 } from "../../reducers/inventory/newPurchase";
+import { getPurchase } from "../../reducers/inventory/newPurchase";
+
+import Spinner from "../Spinner";
 
 import { isDecimal } from "../../helpers/validators";
 import {
@@ -23,12 +27,17 @@ import imageAb9 from "../../assets/theme/media/svg/shapes/abstract-9.svg";
 
 function Purchase() {
   const dispatch = useDispatch();
+  const { purchaseId } = useParams();
 
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    dispatch(resetPurchase());
     dispatch(getProducts({ token }));
-  }, [dispatch, token]);
+    if (purchaseId) {
+      dispatch(getPurchase({ token, purchaseId }));
+    }
+  }, [dispatch, token, purchaseId]);
 
   const { products } = useSelector((state) => state.inventory);
   const {
@@ -36,6 +45,7 @@ function Purchase() {
     purchaseList,
     total,
     saveNewPurchaseStatus,
+    getPurchaseStatus,
   } = useSelector((state) => state.newPurchase);
 
   const selectPersistedState = {
@@ -47,6 +57,11 @@ function Purchase() {
     value: null,
     label: "Selecciona un producto",
   };
+
+  const pageTitle = purchaseId ? `Compra No. ${purchaseId}` : "Nueva compra";
+  const saveButtonTitle = purchaseId
+    ? "Guardar cambios en compra"
+    : "Guardar compra";
 
   const [selectedValue, setSelectedValue] = useState(selectPersistedState);
 
@@ -90,6 +105,9 @@ function Purchase() {
   };
 
   const handleSaveNewPurchase = () => {
+    if (purchaseId) {
+      return;
+    }
     dispatch(
       saveNewPurchase({
         purchaseList,
@@ -98,6 +116,10 @@ function Purchase() {
     );
     setSelectedValue(selectInitialState);
   };
+
+  if (getPurchaseStatus === "loading") {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -110,7 +132,7 @@ function Purchase() {
                   <div className="col-md-9">
                     <div className="d-flex justify-content-between align-items-center flex-column flex-md-row">
                       <h1 className="display-3 font-weight-boldest order-1 order-md-2 mb-5 mb-md-0">
-                        Nueva compra
+                        {pageTitle}
                       </h1>
                     </div>
                   </div>
@@ -294,11 +316,20 @@ function Purchase() {
           </div>
           <div className="container">
             <div className="row justify-content-center py-8 px-8 px-md-0">
-              <div className="col-md-9">
+              <div className="col-12">
                 <div className="d-flex font-size-sm flex-wrap">
+                  {purchaseId && (
+                    <button
+                      type="button"
+                      className="btn btn-light-danger font-weight-bolder mr-3 my-1 px-7"
+                      onClick={handleResetPurchaseList}
+                    >
+                      Eliminar compra
+                    </button>
+                  )}
                   <button
                     type="button"
-                    className="btn btn-light-danger font-weight-bolder mr-3 my-1 px-7"
+                    className="btn btn-light-warning font-weight-bolder mr-3 my-1 px-7"
                     onClick={handleResetPurchaseList}
                     disabled={disableSaveNewPurchase}
                   >
@@ -314,7 +345,7 @@ function Purchase() {
                       <i className="flaticon2-hourglass-1"></i>
                     )}
                     {savingNewPurchase && "Guardando..."}
-                    {!savingNewPurchase && "Guardar compra"}
+                    {!savingNewPurchase && saveButtonTitle}
                   </button>
                 </div>
               </div>

@@ -37,6 +37,10 @@ const routesConfig = [
         path: APP_URLS.purchase,
         element: <Purchase />,
       },
+      {
+        path: APP_URLS.reports.purchases + "/:purchaseId",
+        element: <Purchase />,
+      },
     ],
   },
 ];

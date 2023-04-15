@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import Moment from "react-moment";
 import moment from "moment";
@@ -9,6 +10,7 @@ import {
   setFilterField as setPurchaseReportField,
   getPurchases,
 } from "../../reducers/reports/purchases";
+import { APP_URLS } from "../../helpers/routes";
 
 function PurchasesReport() {
   const { token } = useSelector((state) => state.auth);
@@ -76,6 +78,10 @@ function PurchasesReport() {
       selector: (row) => row.total,
       sortable: true,
     },
+    {
+      name: "Acciones",
+      selector: (row) => row.action,
+    },
   ];
 
   const data = purchases.map((purchase) => ({
@@ -83,6 +89,13 @@ function PurchasesReport() {
     purchase_date: purchase.purchase_date,
     username: purchase.user.username,
     total: purchase.total,
+    action: (
+      <Link to={`${purchase.id}`}>
+        <div className="btn btn-icon btn-warning">
+          <i className="flaticon-edit-1"></i>
+        </div>
+      </Link>
+    ),
   }));
 
   const paginationComponentOptions = {
@@ -168,6 +181,7 @@ function PurchasesReport() {
             sortIcon={<SortIcon />}
             pagination
             paginationComponentOptions={paginationComponentOptions}
+            allowRowEvents
           />
         </div>
       </div>

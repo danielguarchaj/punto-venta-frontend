@@ -19,6 +19,7 @@ const initialState = {
   purchaseList: [],
   total: 0,
   saveNewPurchaseStatus: "loading" | "failed" | "succeeded",
+  getPurchaseStatus: "loading" | "failed" | "succeeded",
 };
 
 export const newPurchase = createSlice({
@@ -71,6 +72,33 @@ export const newPurchase = createSlice({
       .addCase(saveNewPurchase.rejected, (state) => {
         state.saveNewPurchaseStatus = "failed";
         toastErrorNewPurchase();
+      })
+      .addCase(getPurchase.pending, (state) => {
+        state.getPurchaseStatus = "loading";
+      })
+      .addCase(
+        getPurchase.fulfilled,
+        (state, { payload: { status, purchase } }) => {
+          if (status === 200) {
+            state.getPurchaseStatus = "succeeded";
+            state.purchaseForm = initialState.purchaseForm;
+            state.purchaseList = purchase.purchase_items.map(
+              (purchaseItem) => ({
+                productId: purchaseItem.product.id,
+                quantity: purchaseItem.quantity,
+                price: purchaseItem.price,
+                expirationDate: purchaseItem.expiration_date,
+                productLabel: `${purchaseItem.product.name} - ${purchaseItem.product.description} - ${purchaseItem.product.brand.name} - ${purchaseItem.product.category.name}`,
+              })
+            );
+            state.total = purchase.total;
+            return;
+          }
+          state.getPurchaseStatus = "failed";
+        }
+      )
+      .addCase(getPurchase.rejected, (state) => {
+        state.getPurchaseStatus = "failed";
       });
   },
 });
@@ -96,5 +124,22 @@ export const saveNewPurchase = createAsyncThunk(
       },
     });
     return { status: response.status };
+  }
+);
+
+export const getPurchase = createAsyncThunk(
+  "purchasesReport/getPurchase",
+  async ({ purchaseId, token }) => {
+    const { inventory, baseUrl } = SERVICES;
+    const response = await fetch(
+      `${baseUrl}${inventory.getPurchases}${purchaseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return { purchase: data, status: response.status };
   }
 );
