@@ -11,6 +11,10 @@ export const NEW_PURCHASE_SAVING = "Guardando nueva compra";
 export const NEW_PURCHASE_SAVED = "Compra guardada con exito";
 export const NEW_PURCHASE_FAILED =
   "Error al guardar la compra, intente de nuevo";
+export const VOID_PURCHASE_REQUEST = "Anulando compra";
+export const VOID_PURCHASE_FAILED =
+  "Error al anular la compra, intente de nuevo";
+export const VOID_PURCHASE_SUCCESS = "Compra anulada correctamente";
 
 export const toastAddProductPurchaseList = () =>
   toast.success(PURCHASE_LIST_PRODUCT_ADDED, {
@@ -38,6 +42,24 @@ export const toastSavedNewPurchase = () =>
 
 export const toastErrorNewPurchase = () =>
   toast.error(NEW_PURCHASE_FAILED, {
+    position: DEFAULT_POSITION,
+    duration: DEFAULT_DURATION,
+  });
+
+export const toastRequestVoidPurchase = () =>
+  toast.loading(VOID_PURCHASE_REQUEST, {
+    position: DEFAULT_POSITION,
+    duration: DEFAULT_DURATION,
+  });
+
+export const toastFailedVoidPurchase = () =>
+  toast.error(VOID_PURCHASE_FAILED, {
+    position: DEFAULT_POSITION,
+    duration: DEFAULT_DURATION,
+  });
+
+export const toastSuccessVoidPurchase = () =>
+  toast.success(VOID_PURCHASE_SUCCESS, {
     position: DEFAULT_POSITION,
     duration: DEFAULT_DURATION,
   });

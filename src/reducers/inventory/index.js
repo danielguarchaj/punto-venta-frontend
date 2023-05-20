@@ -4,6 +4,8 @@ import { SERVICES } from "../../utils/services";
 const initialState = {
   products: [],
   productsRequestStatus: "loading" | "failed" | "succeeded",
+  providers: [],
+  providersRequestStatus: "loading" | "failed" | "succeeded",
 };
 
 export const inventory = createSlice({
@@ -29,11 +31,28 @@ export const inventory = createSlice({
       )
       .addCase(getProducts.rejected, (state) => {
         state.productsRequestStatus = "failed";
+      })
+      .addCase(getProviders.pending, (state) => {
+        state.providersRequestStatus = "loading";
+        state.token = "";
+      })
+      .addCase(
+        getProviders.fulfilled,
+        (state, { payload: { status, providers } }) => {
+          if (status === 200) {
+            state.providersRequestStatus = "succeeded";
+            state.providers = providers;
+            return;
+          }
+          state.providersRequestStatus = "failed";
+        }
+      )
+      .addCase(getProviders.rejected, (state) => {
+        state.providersRequestStatus = "failed";
       });
   },
 });
 
-// export const { updateUsername, updatePassword, logout } = inventory.actions;
 export default inventory.reducer;
 
 export const getProducts = createAsyncThunk(
@@ -47,5 +66,19 @@ export const getProducts = createAsyncThunk(
     });
     const data = await response.json();
     return { products: data, status: response.status };
+  }
+);
+
+export const getProviders = createAsyncThunk(
+  "inventory/getProviders",
+  async ({ token }) => {
+    const { inventory, baseUrl } = SERVICES;
+    const response = await fetch(`${baseUrl}${inventory.getProviders}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return { providers: data, status: response.status };
   }
 );

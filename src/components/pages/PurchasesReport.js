@@ -10,7 +10,6 @@ import {
   setFilterField as setPurchaseReportField,
   getPurchases,
 } from "../../reducers/reports/purchases";
-import { APP_URLS } from "../../helpers/routes";
 
 function PurchasesReport() {
   const { token } = useSelector((state) => state.auth);
@@ -91,9 +90,9 @@ function PurchasesReport() {
     total: purchase.total,
     action: (
       <Link to={`${purchase.id}`}>
-        <div className="btn btn-icon btn-warning">
+        <button title="Ver detalle" className="btn btn-icon btn-warning">
           <i className="flaticon-edit-1"></i>
-        </div>
+        </button>
       </Link>
     ),
   }));

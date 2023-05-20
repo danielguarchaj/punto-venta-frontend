@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Select from "react-select";
-import moment from "moment";
 
-import { getProducts } from "../../reducers/inventory";
+import { getProducts, getProviders } from "../../reducers/inventory";
 import {
   setPurchaseFormField,
   addProductToList,
   removeProductFromList,
   resetPurchase,
   saveNewPurchase,
+  setProvider,
 } from "../../reducers/inventory/newPurchase";
 import { getPurchase } from "../../reducers/inventory/newPurchase";
 
+import PurchaseDetails from "./PurchaseDetails";
 import Spinner from "../Spinner";
 
-import { isDecimal } from "../../helpers/validators";
+import { isDecimal, isValidUIDate } from "../../helpers/validators";
 import {
   toastAddProductPurchaseList,
   toastRemoveProductPurchaseList,
@@ -29,23 +30,31 @@ function Purchase() {
   const dispatch = useDispatch();
   const { purchaseId } = useParams();
 
-  const { token } = useSelector((state) => state.auth);
+  const isEditing = !!purchaseId;
+
+  const {
+    token,
+  } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(resetPurchase());
+    dispatch(getProviders({ token }));
     dispatch(getProducts({ token }));
-    if (purchaseId) {
+    if (isEditing) {
       dispatch(getPurchase({ token, purchaseId }));
     }
-  }, [dispatch, token, purchaseId]);
+  }, [dispatch, token, purchaseId, isEditing]);
 
-  const { products } = useSelector((state) => state.inventory);
+  const { products, providers } = useSelector((state) => state.inventory);
   const {
     purchaseForm: { productId, quantity, price, expirationDate, productLabel },
+    providerId,
+    providerLabel,
     purchaseList,
     total,
     saveNewPurchaseStatus,
     getPurchaseStatus,
+    purchaseDetail,
   } = useSelector((state) => state.newPurchase);
 
   const selectPersistedState = {
@@ -58,16 +67,29 @@ function Purchase() {
     label: "Selecciona un producto",
   };
 
-  const pageTitle = purchaseId ? `Compra No. ${purchaseId}` : "Nueva compra";
-  const saveButtonTitle = purchaseId
-    ? "Guardar cambios en compra"
-    : "Guardar compra";
+  const selectProviderPersistedState = {
+    value: providerId,
+    label: providerLabel,
+  };
+
+  const selectProviderInitialState = {
+    value: null,
+    label: "Selecciona un proveedor",
+  };
 
   const [selectedValue, setSelectedValue] = useState(selectPersistedState);
+  const [selectedProviderValue, setSelectedProviderValue] = useState(
+    selectProviderPersistedState
+  );
 
   const options = products.map((product) => ({
     value: product.id,
     label: `${product.name} - ${product.description} - ${product.brand.name} - ${product.category.name}`,
+  }));
+
+  const optionsProviders = providers.map((provider) => ({
+    value: provider.id,
+    label: `${provider.name} - ${provider.description}`,
   }));
 
   const handleUpdateInput = (field, value) => {
@@ -75,14 +97,18 @@ function Purchase() {
   };
 
   const expirationDateValid = expirationDate
-    ? moment(expirationDate, "D/M/YYYY", true).isValid()
+    ? isValidUIDate(expirationDate)
     : true;
 
   const invalidQuantity = !isDecimal(quantity);
   const invalidPrice = !isDecimal(price);
 
   const disableAddProduct =
-    !productId || invalidQuantity || invalidPrice || !expirationDateValid;
+    !productId ||
+    invalidQuantity ||
+    invalidPrice ||
+    !expirationDateValid ||
+    !providerId;
 
   const savingNewPurchase = saveNewPurchaseStatus === "loading";
   const disableSaveNewPurchase = purchaseList.length === 0 || savingNewPurchase;
@@ -94,31 +120,35 @@ function Purchase() {
     toastAddProductPurchaseList();
   };
 
-  const handleRemoveProduct = (index) => {
-    dispatch(removeProductFromList({ index }));
+  const handleRemoveProduct = (index, purchaseItemId) => {
+    dispatch(removeProductFromList({ index, purchaseItemId }));
     toastRemoveProductPurchaseList();
   };
 
   const handleResetPurchaseList = () => {
     dispatch(resetPurchase());
     setSelectedValue(selectInitialState);
+    setSelectedProviderValue(selectProviderInitialState);
   };
 
   const handleSaveNewPurchase = () => {
-    if (purchaseId) {
-      return;
-    }
     dispatch(
       saveNewPurchase({
         purchaseList,
+        providerId,
         token,
       })
     );
     setSelectedValue(selectInitialState);
+    setSelectedProviderValue(selectProviderInitialState);
   };
 
   if (getPurchaseStatus === "loading") {
     return <Spinner />;
+  }
+
+  if (isEditing) {
+    return <PurchaseDetails purchase={purchaseDetail} />;
   }
 
   return (
@@ -132,7 +162,7 @@ function Purchase() {
                   <div className="col-md-9">
                     <div className="d-flex justify-content-between align-items-center flex-column flex-md-row">
                       <h1 className="display-3 font-weight-boldest order-1 order-md-2 mb-5 mb-md-0">
-                        {pageTitle}
+                        Nueva compra
                       </h1>
                     </div>
                   </div>
@@ -142,6 +172,35 @@ function Purchase() {
           </div>
           <form className="form" onSubmit={(e) => handleAddProduct(e)}>
             <div className="card-body py-0">
+              <div className="form-group row">
+                <div className="col-12">
+                  <label>Proveedor</label>
+                  <Select
+                    key={`my_unique_select_key__provider${providerId}`}
+                    options={optionsProviders}
+                    onChange={(choice) => {
+                      handleUpdateInput("providerId", choice.value);
+                      handleUpdateInput("providerLabel", choice.label);
+                      dispatch(
+                        setProvider({
+                          providerId: choice.value,
+                          providerLabel: choice.label,
+                        })
+                      );
+                      setSelectedProviderValue({
+                        value: choice.value,
+                        label: choice.label,
+                      });
+                    }}
+                    value={selectedProviderValue}
+                  />
+                  {!providerId && (
+                    <div className="invalid-feedback d-block">
+                      Selecciona un proveedor
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="form-group row">
                 <div className="col-12">
                   <label>Producto</label>
@@ -252,6 +311,9 @@ function Purchase() {
                           <td className="align-middle font-size-h4 text-right border-0">
                             PRECIO
                           </td>
+                          <td className="align-middle font-size-h4 text-right border-0">
+                            FECHA DE VENCIMIENTO
+                          </td>
                           <td className="align-middle font-size-h4 text-right pr-0 border-0">
                             SUBTOTAL
                           </td>
@@ -273,14 +335,26 @@ function Purchase() {
                             <td className="align-middle text-center border-0">
                               {product.price}
                             </td>
+                            <td className="align-middle text-center border-0">
+                              {product.expirationDateFormatted}
+                            </td>
                             <td className="align-middle text-center text-danger font-weight-boldest font-size-h5 pr-0 border-0">
-                              {Number(product.price) * Number(product.quantity)}
+                              {(!product.invalidPrice &&
+                                !product.invalidQuantity &&
+                                Number(product.price) *
+                                  Number(product.quantity)) ||
+                                ""}
                             </td>
                             <td className="align-middle text-right text-danger font-weight-boldest font-size-h5 pr-0 border-0">
                               <button
                                 type="button"
                                 className="btn btn-danger"
-                                onClick={() => handleRemoveProduct(index)}
+                                onClick={() =>
+                                  handleRemoveProduct(
+                                    index,
+                                    product.purchaseItemId
+                                  )
+                                }
                                 disabled={savingNewPurchase}
                               >
                                 Quitar
@@ -318,14 +392,6 @@ function Purchase() {
             <div className="row justify-content-center py-8 px-8 px-md-0">
               <div className="col-12">
                 <div className="d-flex font-size-sm flex-wrap">
-                  {purchaseId && (
-                    <button
-                      type="button"
-                      className="btn btn-light-danger font-weight-bolder mr-3 my-1 px-7"
-                    >
-                      Eliminar compra
-                    </button>
-                  )}
                   <button
                     type="button"
                     className="btn btn-light-warning font-weight-bolder mr-3 my-1 px-7"
@@ -344,7 +410,7 @@ function Purchase() {
                       <i className="flaticon2-hourglass-1"></i>
                     )}
                     {savingNewPurchase && "Guardando..."}
-                    {!savingNewPurchase && saveButtonTitle}
+                    {!savingNewPurchase && "Guardar compra"}
                   </button>
                 </div>
               </div>

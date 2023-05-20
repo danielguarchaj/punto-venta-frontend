@@ -6,7 +6,12 @@ import {
   toastSavedNewPurchase,
   toastErrorNewPurchase,
   toastInstance,
+  toastRequestVoidPurchase,
+  toastFailedVoidPurchase,
+  toastSuccessVoidPurchase,
 } from "../../helpers/toasts";
+
+const { inventory, baseUrl } = SERVICES;
 
 const initialState = {
   purchaseForm: {
@@ -16,10 +21,15 @@ const initialState = {
     expirationDate: "",
     productLabel: "Selecciona un producto",
   },
+  providerId: null,
+  providerLabel: "Selecciona un proveedor",
   purchaseList: [],
+  purchaseItemsToDelete: [],
   total: 0,
   saveNewPurchaseStatus: "loading" | "failed" | "succeeded",
   getPurchaseStatus: "loading" | "failed" | "succeeded",
+  voidPurchaseStatus: "loading" | "failed" | "succeeded",
+  purchaseDetail: null,
 };
 
 export const newPurchase = createSlice({
@@ -29,24 +39,35 @@ export const newPurchase = createSlice({
     setPurchaseFormField: (state, { payload: { field, value } }) => {
       state.purchaseForm[field] = value;
     },
+    setProvider: (state, { payload: { providerId, providerLabel } }) => {
+      state.providerId = providerId;
+      state.providerLabel = providerLabel;
+    },
     addProductToList: (state) => {
       state.purchaseList.push({
         ...state.purchaseForm,
         expirationDate: formatDateForBackend(state.purchaseForm.expirationDate),
+        expirationDateFormatted: state.purchaseForm.expirationDate,
       });
       state.total +=
         Number(state.purchaseForm.price) * Number(state.purchaseForm.quantity);
       state.purchaseForm = initialState.purchaseForm;
+      console.log(state.purchaseList);
     },
-    removeProductFromList: (state, { payload: { index } }) => {
+    removeProductFromList: (state, { payload: { index, purchaseItemId } }) => {
       state.total -=
         Number(state.purchaseList[index].price) *
         Number(state.purchaseList[index].quantity);
       state.purchaseList.splice(index, 1);
+      if (purchaseItemId) {
+        state.purchaseItemsToDelete.push(purchaseItemId);
+      }
+      console.log(state.purchaseItemsToDelete);
     },
     resetPurchase: (state) => {
       state.purchaseForm = initialState.purchaseForm;
       state.purchaseList = initialState.purchaseList;
+      state.purchaseItemsToDelete = initialState.purchaseItemsToDelete;
       state.total = initialState.total;
     },
   },
@@ -81,24 +102,35 @@ export const newPurchase = createSlice({
         (state, { payload: { status, purchase } }) => {
           if (status === 200) {
             state.getPurchaseStatus = "succeeded";
-            state.purchaseForm = initialState.purchaseForm;
-            state.purchaseList = purchase.purchase_items.map(
-              (purchaseItem) => ({
-                productId: purchaseItem.product.id,
-                quantity: purchaseItem.quantity,
-                price: purchaseItem.price,
-                expirationDate: purchaseItem.expiration_date,
-                productLabel: `${purchaseItem.product.name} - ${purchaseItem.product.description} - ${purchaseItem.product.brand.name} - ${purchaseItem.product.category.name}`,
-              })
-            );
-            state.total = purchase.total;
+            state.purchaseDetail = purchase;
             return;
           }
+          state.purchaseDetail = null;
           state.getPurchaseStatus = "failed";
         }
       )
       .addCase(getPurchase.rejected, (state) => {
         state.getPurchaseStatus = "failed";
+      })
+      .addCase(voidPurchase.pending, (state) => {
+        toastRequestVoidPurchase();
+        state.voidPurchaseStatus = "loading";
+      })
+      .addCase(voidPurchase.fulfilled, (state, { payload: { status } }) => {
+        toastInstance.dismiss();
+        if (status === 200) {
+          toastSuccessVoidPurchase();
+          state.voidPurchaseStatus = "succeeded";
+          state.purchaseDetail.voided = true;
+          return;
+        }
+        toastFailedVoidPurchase();
+        state.voidPurchaseStatus = "failed";
+      })
+      .addCase(voidPurchase.rejected, (state) => {
+        toastInstance.dismiss();
+        toastFailedVoidPurchase();
+        state.voidPurchaseStatus = "failed";
       });
   },
 });
@@ -108,16 +140,31 @@ export const {
   addProductToList,
   removeProductFromList,
   resetPurchase,
+  setProvider,
 } = newPurchase.actions;
 export default newPurchase.reducer;
 
 export const saveNewPurchase = createAsyncThunk(
   "inventory/saveNewPurchase",
-  async ({ purchaseList, token }) => {
-    const { inventory, baseUrl } = SERVICES;
+  async ({ purchaseList, providerId, token }) => {
     const response = await fetch(`${baseUrl}${inventory.saveNewPurchase}`, {
       method: "POST",
-      body: JSON.stringify(purchaseList),
+      body: JSON.stringify({ purchaseList, providerId }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { status: response.status };
+  }
+);
+
+export const voidPurchase = createAsyncThunk(
+  "inventory/voidPurchase",
+  async ({ token, purchaseId }) => {
+    const response = await fetch(`${baseUrl}${inventory.voidPurchase}`, {
+      method: "POST",
+      body: JSON.stringify({ purchaseId }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         Authorization: `Bearer ${token}`,
@@ -130,7 +177,6 @@ export const saveNewPurchase = createAsyncThunk(
 export const getPurchase = createAsyncThunk(
   "purchasesReport/getPurchase",
   async ({ purchaseId, token }) => {
-    const { inventory, baseUrl } = SERVICES;
     const response = await fetch(
       `${baseUrl}${inventory.getPurchases}${purchaseId}`,
       {
