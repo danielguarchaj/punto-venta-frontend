@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
@@ -20,6 +20,8 @@ function PurchasesReport() {
   } = useSelector((state) => state.purchasesReports);
   const dispatch = useDispatch();
 
+  const [voidPurchasesCheck, setVoidPurchasesCheck] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const filters = [
@@ -34,6 +36,10 @@ function PurchasesReport() {
       {
         filterField: "purchase_date_before",
         filterValue: purchaseDateTo,
+      },
+      {
+        filterField: "voided",
+        filterValue: voidPurchasesCheck,
       },
     ];
     dispatch(getPurchases({ filters, token }));
@@ -111,7 +117,7 @@ function PurchasesReport() {
   return (
     <div className="card card-body">
       <form className="form" onSubmit={(e) => handleSubmit(e)}>
-        <div className="card-body">
+        <div className="card-body pb-0">
           <div className="form-group row">
             <div className="col-lg-4">
               <label>Fecha compra desde esta fecha:</label>
@@ -156,6 +162,23 @@ function PurchasesReport() {
                 value={username}
               />
             </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox-inline">
+              <label class="checkbox checkbox-lg">
+                <input
+                  type="checkbox"
+                  checked={voidPurchasesCheck}
+                  onChange={() => setVoidPurchasesCheck(!voidPurchasesCheck)}
+                  name="Checkboxes3_1"
+                />
+                <span></span>
+                Compras anuladas
+              </label>
+            </div>
+            <span class="form-text text-muted">
+              Marcar para ver compras anuladas
+            </span>
           </div>
         </div>
         <div className="card-footer">
