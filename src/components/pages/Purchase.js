@@ -141,7 +141,7 @@ function Purchase() {
     setSelectedProviderValue(selectProviderInitialState);
   };
 
-  if (getPurchaseStatus === "loading") {
+  if (getPurchaseStatus === "loading" || !purchaseDetail) {
     return <Spinner />;
   }
 

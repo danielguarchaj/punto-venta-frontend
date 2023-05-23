@@ -101,8 +101,8 @@ export const newPurchase = createSlice({
         getPurchase.fulfilled,
         (state, { payload: { status, purchase } }) => {
           if (status === 200) {
-            state.getPurchaseStatus = "succeeded";
             state.purchaseDetail = purchase;
+            state.getPurchaseStatus = "succeeded";
             return;
           }
           state.purchaseDetail = null;
