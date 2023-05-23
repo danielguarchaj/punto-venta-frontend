@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/punto-venta-frontend/static/css/main.eb83a1e3.css",
-    "main.js": "/punto-venta-frontend/static/js/main.d9b584ca.js",
+    "main.css": "/punto-venta-frontend/static/css/main.24f945c6.css",
+    "main.js": "/punto-venta-frontend/static/js/main.0e4029f9.js",
     "static/js/787.24a0f2a0.chunk.js": "/punto-venta-frontend/static/js/787.24a0f2a0.chunk.js",
     "static/media/la-brands-400.svg": "/punto-venta-frontend/static/media/la-brands-400.928495fae14841a0d610.svg",
     "static/media/la-solid-900.svg": "/punto-venta-frontend/static/media/la-solid-900.a813034654b4ff0a0bac.svg",
@@ -11,8 +11,10 @@
     "static/media/abstract-9.svg": "/punto-venta-frontend/static/media/abstract-9.091423916acdbf1644039d66dec87d51.svg",
     "static/media/abstract-7.svg": "/punto-venta-frontend/static/media/abstract-7.f0e0182df20d905f93b3236b422f5a1d.svg",
     "static/media/Flaticon2.svg": "/punto-venta-frontend/static/media/Flaticon2.79370877b4f6af461592.svg",
+    "static/media/bg-2.jpg": "/punto-venta-frontend/static/media/bg-2.26bd4137ecf25355339c.jpg",
     "static/media/la-solid-900.eot": "/punto-venta-frontend/static/media/la-solid-900.4184d740eae2fb727bfe.eot",
     "static/media/la-solid-900.ttf": "/punto-venta-frontend/static/media/la-solid-900.279f38601f1d1655255f.ttf",
+    "static/media/bg-6.jpg": "/punto-venta-frontend/static/media/bg-6.149b1736b1f359774aa7.jpg",
     "static/media/fa-solid-900.eot": "/punto-venta-frontend/static/media/fa-solid-900.dfaa060a451d978c2565.eot",
     "static/media/fa-solid-900.ttf": "/punto-venta-frontend/static/media/fa-solid-900.a480ec972cb6bce30533.ttf",
     "static/media/la-brands-400.eot": "/punto-venta-frontend/static/media/la-brands-400.908ce19d18187969b32f.eot",
@@ -62,12 +64,12 @@
     "static/media/summernote.woff2": "/punto-venta-frontend/static/media/summernote.7c9436ed8d2deac04e37.woff2",
     "static/media/Ki.woff": "/punto-venta-frontend/static/media/Ki.f6fde817cad4de6994a2.woff",
     "index.html": "/punto-venta-frontend/index.html",
-    "main.eb83a1e3.css.map": "/punto-venta-frontend/static/css/main.eb83a1e3.css.map",
-    "main.d9b584ca.js.map": "/punto-venta-frontend/static/js/main.d9b584ca.js.map",
+    "main.24f945c6.css.map": "/punto-venta-frontend/static/css/main.24f945c6.css.map",
+    "main.0e4029f9.js.map": "/punto-venta-frontend/static/js/main.0e4029f9.js.map",
     "787.24a0f2a0.chunk.js.map": "/punto-venta-frontend/static/js/787.24a0f2a0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.eb83a1e3.css",
-    "static/js/main.d9b584ca.js"
+    "static/css/main.24f945c6.css",
+    "static/js/main.0e4029f9.js"
   ]
 }
