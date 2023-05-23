@@ -6,7 +6,9 @@ import Login from "./components/pages/Login";
 import { APP_URLS } from "./helpers/routes";
 import Billing from "./components/pages/Billing";
 import PurchasesReport from "./components/pages/PurchasesReport";
+import SalesReport from "./components/pages/SalesReport";
 import Purchase from "./components/pages/Purchase";
+import SaleDetails from "./components/pages/SaleDetails";
 import { Toaster } from "react-hot-toast";
 
 const routesConfig = [
@@ -34,12 +36,20 @@ const routesConfig = [
         element: <PurchasesReport />,
       },
       {
+        path: APP_URLS.reports.sales,
+        element: <SalesReport />,
+      },
+      {
         path: APP_URLS.purchase,
         element: <Purchase />,
       },
       {
         path: APP_URLS.reports.purchases + "/:purchaseId",
         element: <Purchase />,
+      },
+      {
+        path: APP_URLS.reports.sales + "/:saleId",
+        element: <SaleDetails />,
       },
     ],
   },

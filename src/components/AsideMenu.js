@@ -59,7 +59,7 @@ function AsideMenu() {
                 children: [
                   {
                     title: "Ventas",
-                    targetPath: APP_URLS.reports.base,
+                    targetPath: APP_URLS.reports.sales,
                   },
                   {
                     title: "Compras",

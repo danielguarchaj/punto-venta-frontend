@@ -5,15 +5,16 @@ import inventoryReducer from "./inventory";
 import newPurchaseReducer from "./inventory/newPurchase";
 import newSaleReducer from "./inventory/newSale";
 import customersReducer from "./customers";
-
+import salesReportReducer from "./reports/sales";
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    purchasesReports: purchasesReportReducer,
-    inventory: inventoryReducer,
-    newPurchase: newPurchaseReducer,
-    newSale: newSaleReducer,
-    customers: customersReducer,
+  auth: authReducer,
+  purchasesReports: purchasesReportReducer,
+  salesReport: salesReportReducer,
+  inventory: inventoryReducer,
+  newPurchase: newPurchaseReducer,
+  newSale: newSaleReducer,
+  customers: customersReducer,
 });
 
 export default rootReducer;
