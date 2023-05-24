@@ -1,28 +1,28 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { APP_URLS } from "../helpers/routes";
+import logo from "../assets/theme/media/logos/logo-letter-13.png";
 
-function HeaderMobile() {
+function HeaderMobile({ handleOpenUserPanel, handleOpenMobileMenu }) {
   return (
     <div
       id="kt_header_mobile"
       className="header-mobile align-items-center header-mobile-fixed"
     >
-      <a href="index.html">
-        <img
-          alt="Logo"
-          className="w-45px"
-          src="assets/media/logos/logo-letter-13.png"
-        />
-      </a>
+      <Link to={APP_URLS.dashboard}>
+        <img alt="Logo" className="w-45px" src={logo} />
+      </Link>
       <div className="d-flex align-items-center">
         <button
-          className="btn p-0 burger-icon burger-icon-left"
-          id="kt_aside_mobile_toggle"
+          className="btn p-0 burger-icon ml-4"
+          id="kt_header_mobile_toggle"
+          onClick={() => handleOpenMobileMenu(true)}
         >
           <span></span>
         </button>
         <button
           className="btn btn-hover-text-primary p-0 ml-2"
           id="kt_header_mobile_topbar_toggle"
+          onClick={() => handleOpenUserPanel(true)}
         >
           <span className="svg-icon svg-icon-xl">
             <svg

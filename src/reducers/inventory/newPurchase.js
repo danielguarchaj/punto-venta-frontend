@@ -52,7 +52,6 @@ export const newPurchase = createSlice({
       state.total +=
         Number(state.purchaseForm.price) * Number(state.purchaseForm.quantity);
       state.purchaseForm = initialState.purchaseForm;
-      console.log(state.purchaseList);
     },
     removeProductFromList: (state, { payload: { index, purchaseItemId } }) => {
       state.total -=
@@ -62,7 +61,6 @@ export const newPurchase = createSlice({
       if (purchaseItemId) {
         state.purchaseItemsToDelete.push(purchaseItemId);
       }
-      console.log(state.purchaseItemsToDelete);
     },
     resetPurchase: (state) => {
       state.purchaseForm = initialState.purchaseForm;

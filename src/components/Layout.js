@@ -25,10 +25,12 @@ function Layout() {
     if (sessionExpired) {
       return navigate(APP_URLS.login);
     }
+    setShowMobileMenu(false);
   }, [navigate, sessionExpired, dispatch, token]);
 
   const [showUserPanel, setShowUserPanel] = useState(false);
   const [showQuickKart, setShowQuickKart] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   if (verifyingToken) {
     return <Spinner />;
@@ -36,7 +38,10 @@ function Layout() {
 
   return (
     <>
-      <HeaderMobile />
+      <HeaderMobile
+        handleOpenUserPanel={setShowUserPanel}
+        handleOpenMobileMenu={setShowMobileMenu}
+      />
       <div className="d-flex flex-column flex-root">
         <div className="d-flex flex-row flex-column-fluid page">
           <AsideMenu />
@@ -47,6 +52,8 @@ function Layout() {
             <Header
               handleOpenUserPanel={setShowUserPanel}
               handleOpenQuickKart={setShowQuickKart}
+              handleOpenMobileMenu={setShowMobileMenu}
+              showMobileMenu={showMobileMenu}
             />
             <div
               className="content d-flex flex-column flex-column-fluid"

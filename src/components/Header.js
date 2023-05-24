@@ -1,7 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
+import MenuItems from "./MenuItems";
 
-function Header({ handleOpenUserPanel, handleOpenQuickKart }) {
+function Header({ handleOpenUserPanel, handleOpenMobileMenu, showMobileMenu }) {
   const {
     tokenPayload: { user },
   } = useSelector((state) => state.auth);
@@ -10,14 +10,26 @@ function Header({ handleOpenUserPanel, handleOpenQuickKart }) {
     <div id="kt_header" className="header header-fixed">
       <div className="container-fluid d-flex align-items-stretch justify-content-between">
         <div
-          className="header-menu-wrapper header-menu-wrapper-left"
+          className={`header-menu-wrapper header-menu-wrapper-left ${
+            showMobileMenu ? "header-menu-wrapper-on" : ""
+          }`}
           id="kt_header_menu_wrapper"
-        ></div>
-        <div className="topbar">
+        >
           <div
-            className="topbar-item"
-            onClick={() => handleOpenQuickKart(true)}
+            id="kt_header_menu"
+            className="header-menu header-menu-mobile header-menu-layout-default d-md-none"
           >
+            <MenuItems />
+          </div>
+        </div>
+        {showMobileMenu && (
+          <div
+            className="header-menu-wrapper-overlay"
+            onClick={() => handleOpenMobileMenu(false)}
+          ></div>
+        )}
+        <div className="topbar">
+          <div className="topbar-item">
             <div
               className="btn btn-icon btn-clean btn-dropdown btn-lg mr-1"
               id="kt_quick_cart_toggle"

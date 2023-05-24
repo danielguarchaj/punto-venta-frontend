@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import MenuItem from "./MenuItem";
+import MenuItems from "./MenuItems";
 
 import { APP_URLS } from "../helpers/routes";
 
@@ -30,55 +30,7 @@ function AsideMenu() {
           data-menu-scroll="1"
           data-menu-dropdown-timeout="500"
         >
-          <ul className="menu-nav">
-            <MenuItem
-              {...{
-                title: "Inicio",
-                icon: "fas fa-home",
-                targetPath: APP_URLS.dashboard,
-              }}
-            />
-            <MenuItem
-              {...{
-                title: "Facturar",
-                icon: "fas fa-cash-register",
-                targetPath: APP_URLS.billing,
-              }}
-            />
-            <MenuItem
-              {...{
-                title: "Nueva Compra",
-                icon: "fas fa-truck-loading",
-                targetPath: APP_URLS.purchase,
-              }}
-            />
-            <MenuItem
-              {...{
-                title: "Reportes",
-                icon: "fas fa-chart-line",
-                children: [
-                  {
-                    title: "Ventas",
-                    targetPath: APP_URLS.reports.sales,
-                  },
-                  {
-                    title: "Compras",
-                    targetPath: APP_URLS.reports.purchases,
-                  },
-                  {
-                    title: "Productos",
-                    targetPath: APP_URLS.reports.base,
-                  },
-                ],
-              }}
-            />
-            <li className="menu-item">
-              <a target={"_blank"} rel="noreferrer" className="menu-link" href={APP_URLS.admin}>
-                <i className="menu-icon flaticon2-settings"></i>
-                <span className="menu-text">Administración</span>
-              </a>
-            </li>
-          </ul>
+          <MenuItems />
         </div>
       </div>
     </div>

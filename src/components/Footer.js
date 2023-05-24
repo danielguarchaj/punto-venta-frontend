@@ -7,7 +7,7 @@ function Footer() {
         <div className="text-dark order-2 order-md-1">
           <span className="text-muted font-weight-bold mr-2">2023©</span>
           <a
-            href="http://keenthemes.com/metronic"
+            href="https://umg.edu.gt/ingenieria/sistemas"
             target="_blank"
             rel="noreferrer"
             className="text-dark-75 text-hover-primary"
@@ -17,7 +17,7 @@ function Footer() {
         </div>
         <div className="nav nav-dark">
           <a
-            href="http://keenthemes.com/metronic"
+            href="https://umg.edu.gt/ingenieria/sistemas"
             target="_blank"
             rel="noreferrer"
             className="nav-link pl-0 pr-5"
