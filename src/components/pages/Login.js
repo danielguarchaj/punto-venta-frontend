@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUsername, updatePassword, getToken } from "../../reducers/auth";
 
 import { useNavigate } from "react-router-dom";
+
+import { toastErrorLogin, toastInstance } from "../../helpers/toasts";
+
 import { APP_URLS } from "../../helpers/routes";
 
 import loginImage from "../../assets/theme/media/svg/illustrations/login-visual-1.svg";
@@ -21,7 +24,18 @@ function Login() {
     if (token && loginStatus === "succeeded" && !sessionExpired) {
       return navigate(APP_URLS.dashboard);
     }
+    if (loginStatus === "failed") {
+      toastInstance.dismiss();
+      toastErrorLogin();
+    }
   }, [token, loginStatus, sessionExpired, navigate]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getToken({ username, password }));
+  };
+
+  const disableSubmit = loginStatus === "loading";
 
   return (
     <div className="d-flex flex-column flex-root">
@@ -62,6 +76,7 @@ function Login() {
                 className="form"
                 noValidate="novalidate"
                 id="kt_login_signin_form"
+                onSubmit={(e) => handleSubmit(e)}
               >
                 <div className="pb-13 pt-lg-0 pt-5">
                   <h3 className="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
@@ -101,14 +116,12 @@ function Login() {
                   />
                 </div>
                 <div className="pb-lg-0 pb-5">
-                  <button
-                    onClick={() => dispatch(getToken({ username, password }))}
-                    type="button"
-                    id="kt_login_signin_submit"
+                  <input
+                    type="submit"
                     className="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
-                  >
-                    Iniciar Sesión
-                  </button>
+                    value="Iniciar Sesión"
+                    disabled={disableSubmit}
+                  />
                 </div>
               </form>
             </div>

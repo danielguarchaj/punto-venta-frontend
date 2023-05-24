@@ -25,6 +25,7 @@ export const CUSTOMER_CREATE_FAILED =
 export const VOID_SALE_REQUEST = "Anulando venta";
 export const VOID_SALE_FAILED = "Error al anular la venta, intente de nuevo";
 export const VOID_SALE_SUCCESS = "Venta anulada correctamente";
+export const LOGIN_FAILED = "Error al iniciar sesion, intenta de nuevo.";
 
 export const toastAddProductPurchaseList = () =>
   toast.success(PURCHASE_LIST_PRODUCT_ADDED, {
@@ -124,6 +125,12 @@ export const toastSavedNewSale = () =>
 
 export const toastErrorNewSale = () =>
   toast.error(NEW_SALE_FAILED, {
+    position: DEFAULT_POSITION,
+    duration: DEFAULT_DURATION,
+  });
+
+export const toastErrorLogin = () =>
+  toast.error(LOGIN_FAILED, {
     position: DEFAULT_POSITION,
     duration: DEFAULT_DURATION,
   });
