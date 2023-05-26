@@ -14,19 +14,19 @@ import { APP_URLS } from "../helpers/routes";
 import Spinner from "./Spinner";
 
 function Layout() {
-  const { token, verifyingToken, sessionExpired } = useSelector(
+  const { token, verifyingToken, sessionExpired, refreshToken } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(verifyToken({ token }));
+    dispatch(verifyToken({ token, refreshToken }));
     if (sessionExpired) {
       return navigate(APP_URLS.login);
     }
     setShowMobileMenu(false);
-  }, [navigate, sessionExpired, dispatch, token]);
+  }, [navigate, sessionExpired, dispatch, token, refreshToken]);
 
   const [showUserPanel, setShowUserPanel] = useState(false);
   const [showQuickKart, setShowQuickKart] = useState(false);

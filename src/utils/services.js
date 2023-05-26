@@ -4,6 +4,7 @@ export const SERVICES = {
   auth: {
     getToken: "auth/token/",
     verifyToken: "auth/token/verify/",
+    refreshToken: "auth/token/refresh/",
   },
   inventory: {
     getPurchases: "inventory/purchases/",
@@ -14,6 +15,7 @@ export const SERVICES = {
     saveNewSale: "inventory/new-sale/",
     getSales: "inventory/sales/",
     voidSale: "inventory/void-sale/",
+    dashboard: "inventory/dashboard/",
   },
   customers: {
     list: "customers/",

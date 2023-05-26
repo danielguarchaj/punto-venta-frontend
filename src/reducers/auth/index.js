@@ -57,16 +57,20 @@ export const authSlice = createSlice({
       .addCase(verifyToken.pending, (state) => {
         state.verifyingToken = true;
       })
-      .addCase(verifyToken.fulfilled, (state, { payload: { status } }) => {
-        state.verifyingToken = false;
-        if (status === 200) {
-          state.sessionExpired = false;
-          return;
+      .addCase(
+        verifyToken.fulfilled,
+        (state, { payload: { status, userData } }) => {
+          state.verifyingToken = false;
+          if (status === 200) {
+            state.sessionExpired = false;
+            state.tokenPayload.user = userData;
+            return;
+          }
+          state.token = "";
+          state.loginStatus = "failed";
+          state.sessionExpired = true;
         }
-        state.token = "";
-        state.loginStatus = "failed";
-        state.sessionExpired = true;
-      })
+      )
       .addCase(verifyToken.rejected, (state) => {
         state.token = "";
         state.loginStatus = "failed";
@@ -94,11 +98,12 @@ export const verifyToken = createAsyncThunk(
   "auth/verifyToken",
   async ({ token }) => {
     const { auth, baseUrl } = SERVICES;
-    const { status } = await fetch(`${baseUrl}${auth.verifyToken}`, {
+    const response = await fetch(`${baseUrl}${auth.verifyToken}`, {
       method: "POST",
       body: JSON.stringify({ token }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     });
-    return { status };
+    const { current_user } = await response.json();
+    return { status: response.status, userData: current_user };
   }
 );

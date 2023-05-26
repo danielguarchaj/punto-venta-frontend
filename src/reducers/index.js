@@ -6,6 +6,7 @@ import newPurchaseReducer from "./inventory/newPurchase";
 import newSaleReducer from "./inventory/newSale";
 import customersReducer from "./customers";
 import salesReportReducer from "./reports/sales";
+import dashboardReducer from "./dashboard";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   newPurchase: newPurchaseReducer,
   newSale: newSaleReducer,
   customers: customersReducer,
+  dashboard: dashboardReducer,
 });
 
 export default rootReducer;
