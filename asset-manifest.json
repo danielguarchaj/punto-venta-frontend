@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/punto-venta-frontend/static/css/main.24f945c6.css",
-    "main.js": "/punto-venta-frontend/static/js/main.c58c0b05.js",
+    "main.js": "/punto-venta-frontend/static/js/main.284d5a68.js",
     "static/js/787.24a0f2a0.chunk.js": "/punto-venta-frontend/static/js/787.24a0f2a0.chunk.js",
     "static/media/la-brands-400.svg": "/punto-venta-frontend/static/media/la-brands-400.928495fae14841a0d610.svg",
     "static/media/la-solid-900.svg": "/punto-venta-frontend/static/media/la-solid-900.a813034654b4ff0a0bac.svg",
@@ -63,13 +63,14 @@
     "static/media/summernote.woff": "/punto-venta-frontend/static/media/summernote.08c343ff91f188dfc1a7.woff",
     "static/media/summernote.woff2": "/punto-venta-frontend/static/media/summernote.7c9436ed8d2deac04e37.woff2",
     "static/media/Ki.woff": "/punto-venta-frontend/static/media/Ki.f6fde817cad4de6994a2.woff",
+    "static/media/029-boy-11.svg": "/punto-venta-frontend/static/media/029-boy-11.2877881eddb1c7d50f4dc22b1568e82a.svg",
     "index.html": "/punto-venta-frontend/index.html",
     "main.24f945c6.css.map": "/punto-venta-frontend/static/css/main.24f945c6.css.map",
-    "main.c58c0b05.js.map": "/punto-venta-frontend/static/js/main.c58c0b05.js.map",
+    "main.284d5a68.js.map": "/punto-venta-frontend/static/js/main.284d5a68.js.map",
     "787.24a0f2a0.chunk.js.map": "/punto-venta-frontend/static/js/787.24a0f2a0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.24f945c6.css",
-    "static/js/main.c58c0b05.js"
+    "static/js/main.284d5a68.js"
   ]
 }
